@@ -18,3 +18,9 @@ jobs:
         run: yarn install
       - name: Lint
         run: yarn lint
+      - name: Build and push docker
+        uses: docker/build-push-action@v4
+        with:
+          file: /Dockerfile
+          push: false
+          tags: pineapple217/webapp:latest
