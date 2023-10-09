@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  webapp:
+    container_name: webapp
+    image: pineapple217/webapp
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URL=mongodb://mongo-db:27017
+    depends_on:
+      - mongo-db
+  mongo-db:
+    container_name: mongo-db
+    image: mongo
+    volumes:
+      - mongo-db:/data/db
+  tests:
+    container_name: tests
+    image: pineapple217/webapp
+    command: yarn test
+    depends_on:
+      - webapp
+    environment:
+      - API_URL=http://webapp:3000
+
+volumes:
+  mongo-db:
